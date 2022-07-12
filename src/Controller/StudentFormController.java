@@ -25,7 +25,7 @@ public class StudentFormController {
     public TextField txtNic;
 
     public void saveOnAction(ActionEvent event) {
-        
+
     }
 
     public void deleteOnAction(ActionEvent event) {
