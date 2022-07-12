@@ -24,33 +24,23 @@ public class StudentCrudController {
         return student;
     }
 
-    public String generateNewId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.executeQuery("SELECT student_id FROM student ORDER BY student_id DESC");
+    public static String generateNewId() throws SQLException, ClassNotFoundException {
+            ResultSet set = CrudUtil.executeQuery("SELECT * FROM student ORDER BY student_id DESC LIMIT 1");
+            int a=0;
+            String newVersion;
+            if (set.next()){
+                String version = set.getString(1);
+                int i = (Integer.parseInt(version.substring(1, version.length()))+1);
 
+                if (i==100) {
+                    newVersion = "S0" +  i;
+                }else {
+                    newVersion = "S00" + i;
+                }
+                return newVersion;
 
-        String newUserId = "";
-        int integer = 0;
-
-        String lastUserId = resultSet.getString(1);
-        String[] split = lastUserId.split("[A-z]");
-        if(split.length>0){
-            integer = Integer.valueOf(split[2]);
-            ++integer;
-        }
-
-
-        if(resultSet.next()){
-            if (integer>=100) {
-                newUserId = "S00-" + String.valueOf(integer) ;
-            }else if(integer>=10){
-                newUserId = "S00-0" + String.valueOf(integer);
             }else{
-                newUserId = "S00-00" + String.valueOf(integer);
+                return "S001";
             }
-            return newUserId;
-
-        }else{
-            return "S00-001";
-        }
     }
 }

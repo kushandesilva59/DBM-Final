@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.ResultSet;
@@ -29,6 +30,8 @@ public class StudentFormController {
     public TextField txtAddress;
     public TextField txtNic;
     public TextField txtSearch;
+    public Button btnNew;
+    public Button btnDelete;
 
     public void initialize() throws SQLException, ClassNotFoundException {
         colId.setCellValueFactory(new PropertyValueFactory("studentId"));
@@ -38,12 +41,18 @@ public class StudentFormController {
         colAddress.setCellValueFactory(new PropertyValueFactory("address"));
         colNIC.setCellValueFactory(new PropertyValueFactory("nic"));
 
+        btnDelete.setDisable(true);
+        btnSave.setDisable(true);
+        btnNew.setDisable(true);
+
         tblStudents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setDetails(newValue));
 
         loadStudents();
     }
 
     private void setDetails(Student student) {
+        btnSave.setText("Update");
+        btnDelete.setDisable(false);
         txtName.setText(student.getStudentName());
         txtEmail.setText(student.getEmail());
         txtAddress.setText(student.getAddress());
@@ -68,7 +77,36 @@ public class StudentFormController {
         tblStudents.setItems(studentList);
     }
 
-    public void saveOnAction(ActionEvent event) {
+    public void saveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        if(btnSave.getText().equals("Save")){
+            Student student = new Student();
+            student.setStudentId(StudentCrudController.generateNewId());
+            student.setStudentName(txtName.getText());
+            student.setAddress(txtAddress.getText());
+            student.setEmail(txtEmail.getText());
+            student.setContact(txtContact.getText());
+            student.setNic(txtNic.getText());
+
+            boolean isSaved = CrudUtil.executeUpdate("INSERT INTO student VALUES (?,?,?,?,?,?)", StudentCrudController.generateNewId(), txtName.getText(), txtEmail.getText(), txtContact.getText(), txtAddress.getText(), txtNic.getText());
+
+            if(isSaved){
+                tblStudents.getItems().add(student);
+                tblStudents.refresh();
+                new Alert(Alert.AlertType.CONFIRMATION,"Saved!..").show();
+
+            }else{
+                new Alert(Alert.AlertType.WARNING,"Something went wrong!..").show();
+            }
+        }else{
+            Student student = tblStudents.getSelectionModel().getSelectedItem();
+            boolean isUpdated = CrudUtil.executeUpdate("UPDATE student SET student_name = ? ,email = ?,contact = ?,address = ?,nic = ? WHERE student_id = ?", txtName.getText(), txtEmail.getText(), txtContact.getText(), txtAddress.getText(), txtNic.getText(), student.getStudentId());
+            if(isUpdated){
+                new Alert(Alert.AlertType.CONFIRMATION,"Updated!..").show();
+                tblStudents.refresh();
+            }else {
+                new Alert(Alert.AlertType.WARNING,"something went wrong!..").show();
+            }
+        }
 
     }
 
@@ -89,5 +127,10 @@ public class StudentFormController {
 
     public void newOnAction(ActionEvent event) {
 
+    }
+
+    public void keyReleasedOnAction(KeyEvent keyEvent) {
+        btnDelete.setDisable(true);
+        btnSave.setDisable(false);
     }
 }
