@@ -5,11 +5,15 @@ import Util.CrudUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -130,18 +134,10 @@ public class StudentFormController {
         }
     }
 
-    public void searchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        ObservableList <Student>student = FXCollections.observableArrayList();
-        ResultSet resultSet = CrudUtil.executeQuery("SELECT * FROM student WHERE student_id = ?", txtSearch.getText());
+    public void searchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
+        Stage stage = (Stage) studentFormContext.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/SearchStudent.fxml"))));
 
-        while (resultSet.next()){
-           student.add(new Student(resultSet.getString(1),     resultSet.getString(2),
-                   resultSet.getString(3),
-                   resultSet.getString(4),
-                   resultSet.getString(5),resultSet.getString(6)));
-        }
-
-        tblStudents.setItems(student);
     }
 
     public void newOnAction(ActionEvent event) {
