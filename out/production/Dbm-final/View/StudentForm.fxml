@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="studentFormContext" prefHeight="818.0" prefWidth="1063.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StudentFormController">
    <children>
-      <TableView fx:id="tblStudents" layoutX="25.0" layoutY="189.0" prefHeight="588.0" prefWidth="1015.0">
+      <TableView fx:id="tblStudents" layoutX="25.0" layoutY="283.0" prefHeight="494.0" prefWidth="1015.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="126.0" text="Student Id" />
           <TableColumn fx:id="colName" prefWidth="158.0" text="Student Name" />
@@ -22,19 +21,22 @@
             <TableColumn fx:id="colNIC" prefWidth="176.0" text="NIC" />
         </columns>
       </TableView>
-      <Button fx:id="btnSave" layoutX="968.0" layoutY="120.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="31.0" prefWidth="70.0" text="Save" />
-      <Button layoutX="968.0" layoutY="74.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="31.0" prefWidth="70.0" text="Delete" />
-      <TextField fx:id="txtName" layoutX="25.0" layoutY="120.0" prefHeight="31.0" prefWidth="129.0" promptText="Student Name" />
-      <TextField fx:id="txtEmail" layoutX="160.0" layoutY="120.0" prefHeight="31.0" prefWidth="194.0" promptText="e-mail" />
-      <TextField fx:id="txtContact" layoutX="360.0" layoutY="120.0" prefHeight="31.0" prefWidth="194.0" promptText="contact" />
-      <TextField fx:id="txtAddress" layoutX="560.0" layoutY="120.0" prefHeight="31.0" prefWidth="194.0" promptText="address" />
-      <TextField fx:id="txtNic" layoutX="763.0" layoutY="120.0" prefHeight="31.0" prefWidth="194.0" promptText="NIC" />
-      <Separator layoutX="25.0" layoutY="172.0" prefHeight="0.0" prefWidth="1015.0" />
+      <Button fx:id="btnSave" layoutX="946.0" layoutY="230.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="31.0" prefWidth="92.0" text="Save" />
+      <Button layoutX="968.0" layoutY="184.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="31.0" prefWidth="70.0" text="Delete" />
+      <TextField fx:id="txtName" layoutX="25.0" layoutY="230.0" prefHeight="31.0" prefWidth="129.0" promptText="Student Name" />
+      <TextField fx:id="txtEmail" layoutX="160.0" layoutY="230.0" prefHeight="31.0" prefWidth="194.0" promptText="e-mail" />
+      <TextField fx:id="txtContact" layoutX="360.0" layoutY="230.0" prefHeight="31.0" prefWidth="194.0" promptText="contact" />
+      <TextField fx:id="txtAddress" layoutX="560.0" layoutY="230.0" prefHeight="31.0" prefWidth="194.0" promptText="address" />
+      <TextField fx:id="txtNic" layoutX="762.0" layoutY="230.0" prefHeight="31.0" prefWidth="175.0" promptText="NIC" />
+      <Separator layoutX="24.0" layoutY="162.0" prefHeight="0.0" prefWidth="1015.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Student Form">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <Separator layoutY="44.0" prefHeight="3.0" prefWidth="1063.0" />
+      <TextField fx:id="txtSearch" layoutX="373.0" layoutY="104.0" promptText="S00-001" />
+      <Button layoutX="593.0" layoutY="104.0" mnemonicParsing="false" onAction="#searchOnAction" prefHeight="31.0" prefWidth="77.0" text="Search" />
+      <Button layoutX="872.0" layoutY="184.0" mnemonicParsing="false" onAction="#newOnAction" prefHeight="31.0" prefWidth="85.0" text="+New" />
    </children>
 </AnchorPane>

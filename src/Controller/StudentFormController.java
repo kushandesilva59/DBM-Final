@@ -5,15 +5,13 @@ import Util.CrudUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class StudentFormController {
     public AnchorPane studentFormContext;
@@ -30,6 +28,7 @@ public class StudentFormController {
     public TextField txtContact;
     public TextField txtAddress;
     public TextField txtNic;
+    public TextField txtSearch;
 
     public void initialize() throws SQLException, ClassNotFoundException {
         colId.setCellValueFactory(new PropertyValueFactory("studentId"));
@@ -73,7 +72,22 @@ public class StudentFormController {
 
     }
 
-    public void deleteOnAction(ActionEvent event) {
+    public void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure ?").showAndWait();
+        if(buttonType.get().equals(ButtonType.OK)){
+            Student student = tblStudents.getSelectionModel().getSelectedItem();
+            tblStudents.getItems().remove(student);
+            tblStudents.refresh();
+            CrudUtil.executeUpdate("DELETE FROM student WHERE student_id = ?",student.getStudentId());
+            new Alert(Alert.AlertType.CONFIRMATION,"Deleted!..").show();
+        }
+    }
+
+    public void searchOnAction(ActionEvent event) {
+
+    }
+
+    public void newOnAction(ActionEvent event) {
 
     }
 }
