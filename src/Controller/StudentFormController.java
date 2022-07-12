@@ -45,7 +45,14 @@ public class StudentFormController {
         btnSave.setDisable(true);
         btnNew.setDisable(true);
 
-        tblStudents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setDetails(newValue));
+        tblStudents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                setDetails(newValue);
+            }
+        }
+
+
+        );
 
         loadStudents();
     }
@@ -103,7 +110,8 @@ public class StudentFormController {
             boolean isUpdated = CrudUtil.executeUpdate("UPDATE student SET student_name = ? ,email = ?,contact = ?,address = ?,nic = ? WHERE student_id = ?", txtName.getText(), txtEmail.getText(), txtContact.getText(), txtAddress.getText(), txtNic.getText(), student.getStudentId());
             if(isUpdated){
                 new Alert(Alert.AlertType.CONFIRMATION,"Updated!..").show();
-                tblStudents.refresh();
+                tblStudents.getItems().clear();
+                loadStudents();
             }else {
                 new Alert(Alert.AlertType.WARNING,"something went wrong!..").show();
             }
