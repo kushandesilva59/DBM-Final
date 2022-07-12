@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Student;
 import Util.CrudUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -41,9 +43,20 @@ public class StudentFormController {
     }
 
     private void loadStudents() throws SQLException, ClassNotFoundException {
+        ObservableList <Student>studentList = FXCollections.observableArrayList();
         ResultSet resultSet = CrudUtil.executeQuery("SELECT * FROM student");
 
-        while(){}
+        while(resultSet.next()){
+           studentList.add(new Student(
+                   resultSet.getString(1),
+                   resultSet.getString(2),
+                   resultSet.getString(3),
+                   resultSet.getString(4),
+                   resultSet.getString(5),
+                   resultSet.getString(6)
+           ));
+        }
+        tblStudents.setItems(studentList);
     }
 
     public void saveOnAction(ActionEvent event) {
