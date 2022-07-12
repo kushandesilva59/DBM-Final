@@ -26,7 +26,7 @@ public class StudentCrudController {
 
     public String generateNewId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.executeQuery("SELECT student_id FROM student ORDER BY student_id DESC");
-        
+
 
         String newUserId = "";
         int integer = 0;
