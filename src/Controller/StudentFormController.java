@@ -39,7 +39,17 @@ public class StudentFormController {
         colAddress.setCellValueFactory(new PropertyValueFactory("address"));
         colNIC.setCellValueFactory(new PropertyValueFactory("nic"));
 
+        tblStudents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setDetails(newValue));
+
         loadStudents();
+    }
+
+    private void setDetails(Student student) {
+        txtName.setText(student.getStudentName());
+        txtEmail.setText(student.getEmail());
+        txtAddress.setText(student.getAddress());
+        txtContact.setText(student.getContact());
+        txtNic.setText(student.getNic());
     }
 
     private void loadStudents() throws SQLException, ClassNotFoundException {
