@@ -51,6 +51,7 @@ public class StudentFormController {
     }
 
     private void setDetails(Student student) {
+        btnNew.setDisable(false);
         btnSave.setText("Update");
         btnDelete.setDisable(false);
         txtName.setText(student.getStudentName());
@@ -121,11 +122,27 @@ public class StudentFormController {
         }
     }
 
-    public void searchOnAction(ActionEvent event) {
+    public void searchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        ObservableList <Student>student = FXCollections.observableArrayList();
+        ResultSet resultSet = CrudUtil.executeQuery("SELECT * FROM student WHERE student_id = ?", txtSearch.getText());
 
+        while (resultSet.next()){
+           student.add(new Student(resultSet.getString(1),     resultSet.getString(2),
+                   resultSet.getString(3),
+                   resultSet.getString(4),
+                   resultSet.getString(5),resultSet.getString(6)));
+        }
+
+        tblStudents.setItems(student);
     }
 
     public void newOnAction(ActionEvent event) {
+        txtName.clear();
+        txtEmail.clear();
+        txtNic.clear();
+        txtContact.clear();
+        txtAddress.clear();
+    btnSave.setText("Save");
 
     }
 
